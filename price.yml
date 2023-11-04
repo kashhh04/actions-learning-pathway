@@ -1,0 +1,42 @@
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+
+# Generate some example data
+data = {'SquareFeet': [1400, 1600, 1700, 1875, 1100, 1550, 2350, 2450, 1425, 1700],
+        'Price': [245000, 312000, 279000, 308000, 199000, 219000, 405000, 324000, 319000, 255000]}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Define features and target
+X = df[['SquareFeet']]
+y = df['Price']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the linear regression model
+model = LinearRegression()
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Predict prices on the test set
+y_pred = model.predict(X_test)
+
+# Calculate Mean Squared Error
+mse = mean_squared_error(y_test, y_pred)
+
+# Print the Mean Squared Error
+print(f'Mean Squared Error: {mse}')
+
+# Now you can use the trained model to make predictions on new data
+new_square_feet = np.array([1800, 2000, 2200]).reshape(-1, 1)
+predicted_prices = model.predict(new_square_feet)
+
+# Print the predicted prices
+print(f'Predicted Prices: {predicted_prices}')
